@@ -1,17 +1,57 @@
+import 'package:dictionary_app/Models/expression.dart';
 import 'package:dictionary_app/utils/constants.dart';
+import 'package:dictionary_app/utils/fetch_data.dart';
 import 'package:dictionary_app/widgets/list_expression.dart';
 import 'package:dictionary_app/widgets/my_app_bar.dart';
 import 'package:flutter/material.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  List<Expression> _allExpressions = [];
+  List<Expression> _filteredExpressions = [];
+  final _searchController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _searchController.addListener(_onSearchChanged);
+    fetchExpressions().then((data) {
+      setState(() {
+        _allExpressions = data;
+        _filteredExpressions = _allExpressions;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _searchController.removeListener(_onSearchChanged);
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  _onSearchChanged() {
+    setState(() {
+      _filteredExpressions = _allExpressions
+          .where((expression) => expression.expressionName
+              .toLowerCase()
+              .contains(_searchController.text.toLowerCase()))
+          .toList();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         appBar: MyAppBar(title: nameApp),
-        body: const ListExpression(),
+        body: ListExpression(expressions: _filteredExpressions),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         floatingActionButton: SizedBox(
           height: 20.0,
@@ -38,9 +78,10 @@ class HomePage extends StatelessWidget {
                         const SizedBox(height: 10),
                         Row(
                           children: [
-                            const Expanded(
+                            Expanded(
                                 child: TextField(
-                              decoration: InputDecoration(
+                              controller: _searchController,
+                              decoration: const InputDecoration(
                                 labelText: 'Cherchez ici',
                                 labelStyle: TextStyle(color: colorSearchEcr),
                                 disabledBorder: OutlineInputBorder(
@@ -52,7 +93,9 @@ class HomePage extends StatelessWidget {
                             )),
                             const SizedBox(width: 4.0),
                             ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: primaryColor,
                               ),

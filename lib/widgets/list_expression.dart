@@ -5,7 +5,8 @@ import 'package:dictionary_app/widgets/expression_card.dart';
 import 'package:flutter/material.dart';
 
 class ListExpression extends StatelessWidget {
-  const ListExpression({super.key});
+  final List<Expression> expressions;
+  const ListExpression({super.key, required this.expressions});
 
   @override
   Widget build(BuildContext context) {
