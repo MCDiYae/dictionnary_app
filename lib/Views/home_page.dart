@@ -20,11 +20,11 @@ class HomePage extends StatelessWidget {
             onPressed: () {
               // Open a search dialog or perform search action
               showModalBottomSheet(
-                backgroundColor: primaryColor,
+                backgroundColor: colorSearchButt,
                 shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(24),
-                    topRight: Radius.circular(24),
+                    topLeft: Radius.circular(8),
+                    topRight: Radius.circular(8),
                   ),
                 ),
                 context: context,
@@ -42,8 +42,12 @@ class HomePage extends StatelessWidget {
                                 child: TextField(
                               decoration: InputDecoration(
                                 labelText: 'Cherchez ici',
-                                labelStyle: TextStyle(color: Colors.white),
-                                border: OutlineInputBorder(),
+                                labelStyle: TextStyle(color: colorSearchEcr),
+                                disabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: backColorButtom, width: 0.0)),
+                                filled: true,
+                                fillColor: backColorButtom,
                               ),
                             )),
                             const SizedBox(width: 4.0),
