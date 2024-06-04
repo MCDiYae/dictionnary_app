@@ -38,7 +38,7 @@ class _BottomSearchBarState extends State<BottomSearchBar> {
   Widget _buildExpandedBar() {
     return Container(
       color: colorSearchButt,
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.all(5),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -52,15 +52,45 @@ class _BottomSearchBarState extends State<BottomSearchBar> {
                 child: TextField(
                   decoration: InputDecoration(
                     hintText: 'Cherchez ici',
-                    fillColor: Colors.white,
+                    fillColor: cardColor,
                     filled: true,
+                    border: InputBorder.none,
                   ),
                 ),
               ),
-              IconButton(
-                icon: const Icon(Icons.search, color: Colors.white),
-                onPressed: () {},
+              const SizedBox(
+                width: 4,
               ),
+              SizedBox(
+                height: 45,
+                child: ElevatedButton(
+                  onPressed: () {
+                    // Your search function here
+                  },
+                  style: ElevatedButton.styleFrom(
+                    //minimumSize:const Size(double.infinity, 30),
+                    backgroundColor:
+                        appBarColor, // You can adjust the button color here
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(
+                          4), // Adjust corner radius as needed
+                    ),
+                  ),
+                  child: const Text(
+                    'Recherche',
+                    style: TextStyle(
+                      color: ecritureButtom,
+                      shadows: [
+                        Shadow(
+                          offset: Offset(1.0, 1.0),
+                          blurRadius: 3.0,
+                          color: Colors.white70,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              )
             ],
           ),
         ],
