@@ -19,4 +19,12 @@ class Expression {
       example: json['example'],
     );
   }
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['expressionName'] = expressionName;
+    data['image'] = image;
+    data['definition'] = definition;
+    data['example'] = example;
+    return data;
+  }
 }

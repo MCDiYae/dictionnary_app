@@ -12,10 +12,3 @@ const backColorButtom = Color.fromARGB(255, 36, 36, 36);
 const backColor2Buttom = Color.fromARGB(255, 63, 63, 63);
 const colorSearchButt = Color.fromARGB(255, 0, 0, 82);
 const colorSearchEcr = Color.fromARGB(255, 108, 108, 108);
-
-//#04057b = rgba(4,5,123,255) color app 
-// appbar gradient : 090793 // rgba(10,9,149,255) // rgba(8,9,153,255) // rgba(8,6,141,255)
-// buttomshet : rgba(36,36,36,255) / tani : rgba(63,63,63,255) // ecriture rgba(247,247,247,255)
-// privacy 
-//card color rgba(54,57,88,255) rgba(57,60,91,255)
-// icon color back rgba(38,54,44,255)// rgba(49,226,131,255) color 
