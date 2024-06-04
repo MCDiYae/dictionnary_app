@@ -2,7 +2,9 @@ import 'package:dictionary_app/utils/constants.dart';
 import 'package:flutter/material.dart';
 
 class BottomSearchBar extends StatefulWidget {
-  const BottomSearchBar({super.key});
+  final Function(String) onSearch;
+
+  const BottomSearchBar({super.key, required this.onSearch});
 
   @override
   State<BottomSearchBar> createState() => _BottomSearchBarState();
@@ -10,6 +12,7 @@ class BottomSearchBar extends StatefulWidget {
 
 class _BottomSearchBarState extends State<BottomSearchBar> {
   bool _isExpanded = false;
+  final TextEditingController _controller = TextEditingController();
 
   void _toggleExpand() {
     setState(() {
@@ -38,7 +41,7 @@ class _BottomSearchBarState extends State<BottomSearchBar> {
   Widget _buildExpandedBar() {
     return Container(
       color: colorSearchButt,
-      padding: const EdgeInsets.all(5),
+      padding: const EdgeInsets.all(10),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -48,9 +51,10 @@ class _BottomSearchBarState extends State<BottomSearchBar> {
           ),
           Row(
             children: [
-              const Expanded(
+              Expanded(
                 child: TextField(
-                  decoration: InputDecoration(
+                  controller: _controller,
+                  decoration: const InputDecoration(
                     hintText: 'Cherchez ici',
                     fillColor: cardColor,
                     filled: true,
@@ -58,14 +62,12 @@ class _BottomSearchBarState extends State<BottomSearchBar> {
                   ),
                 ),
               ),
-              const SizedBox(
-                width: 4,
-              ),
+              const SizedBox(width: 5),
               SizedBox(
                 height: 45,
                 child: ElevatedButton(
                   onPressed: () {
-                    // Your search function here
+                    widget.onSearch(_controller.text);
                   },
                   style: ElevatedButton.styleFrom(
                     //minimumSize:const Size(double.infinity, 30),
@@ -90,7 +92,7 @@ class _BottomSearchBarState extends State<BottomSearchBar> {
                     ),
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ],

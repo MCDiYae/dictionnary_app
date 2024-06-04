@@ -1,32 +1,39 @@
-
 import 'package:dictionary_app/Models/expression.dart';
-import 'package:dictionary_app/utils/fetch_data.dart';
-import 'package:dictionary_app/widgets/expression_card.dart';
+import 'package:dictionary_app/Views/expression_page.dart';
+import 'package:dictionary_app/utils/constants.dart';
 import 'package:flutter/material.dart';
 
 class ListExpression extends StatelessWidget {
-  const ListExpression({super.key});
+  final List<Expression> expressions;
+
+  const ListExpression(this.expressions, {super.key});
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<Expression>>(
-      future: fetchExpressions(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
-        } else if (snapshot.hasError) {
-          return Center(child: Text('Error: ${snapshot.error}'));
-        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          return const Center(child: Text('No expressions found'));
-        } else {
-          return ListView.builder(
-            itemCount: snapshot.data!.length,
-            itemBuilder: (context, index) {
-              final expression = snapshot.data![index];
-              return ExpressionCard(expression: expression);
-            },
-          );
-        }
+    return ListView.builder(
+      itemCount: expressions.length,
+      itemBuilder: (context, index) {
+        final expression = expressions[index];
+        return Container(
+          height: 60,
+          decoration: const BoxDecoration(
+              color: cardColor,
+              border: Border(
+                  bottom: BorderSide(
+                color: Color.fromARGB(255, 84, 86, 126),
+                style: BorderStyle.solid,
+              ))),
+          child: ListTile(
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ExpressionPage(expression: expression),
+              ),
+            ),
+            leading: Image.asset(expression.image),
+            title: Text(expression.expressionName),
+          ),
+        );
       },
     );
   }
